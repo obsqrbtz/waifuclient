@@ -31,7 +31,21 @@ namespace api.Views
             if (sender is not Button || Application.Current is null) return;
             Application.Current.RequestedThemeVariant =
                 ActualThemeVariant == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark;
-            TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light ? Avalonia.Media.Color.FromRgb(255, 255, 255) : Avalonia.Media.Color.FromRgb(0, 0, 0);
+            TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
+        }
+
+        private void TypeSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel context)
+            {
+                if (TypeCb.SelectedItem is string category)
+                {
+                    context.Categories = category == "nsfw"
+                        ? [.. context.NsfwCategories]
+                        : [.. context.SfwCategories];
+                    CategoryCb.SelectedIndex = 0;
+                }
+            }
         }
     }
 }

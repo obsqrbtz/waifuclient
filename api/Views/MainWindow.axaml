@@ -53,6 +53,7 @@
 							HorizontalAlignment="Stretch"
 							Margin="5"
 							Name="TypeCb"
+							SelectionChanged="TypeSelectionChanged"
 							SelectedItem="{Binding Type}"
 							ItemsSource="{Binding Types}"/>
 						<ComboBox
