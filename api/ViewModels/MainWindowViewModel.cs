@@ -90,7 +90,7 @@ namespace api.ViewModels
             {
                 byte[] imgBuff = await _httpClient.GetByteArrayAsync(url);
                 Stream stream = new MemoryStream(imgBuff);
-                var image = new Avalonia.Media.Imaging.Bitmap(stream);
+                var image = new Bitmap(stream);
                 Waifu = image;
             }
             catch (Exception ex)

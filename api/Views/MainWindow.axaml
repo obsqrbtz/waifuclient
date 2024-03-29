@@ -46,6 +46,7 @@
 						<Button
 							DockPanel.Dock="Top"
 							Margin="5"
+							HorizontalAlignment="Stretch"
 							Command="{Binding GetWaifu}"
 							Content="Get new waifu"/>
 						<ComboBox
@@ -65,6 +66,7 @@
 							ItemsSource="{Binding Categories}"/>
 						<Button
 							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
 							Margin="5"
 							Command="{Binding SaveClick}"
 							Content="Save waifu"/>
@@ -79,9 +81,9 @@
 					</DockPanel>
 					<Border
 						BorderThickness="1"
-						BorderBrush="{DynamicResource InternalBorderBrush}"
+						BorderBrush="{DynamicResource ControlBorderBrush}"
 						Margin="10 5 0 0"
-						Background="#cccccc"
+						Background="{DynamicResource BackgroundBrush}"
 						DockPanel.Dock="Left"
 						CornerRadius="7 0 0 0">
 						<Image
