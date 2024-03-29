@@ -1,0 +1,64 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="api.App"
+             xmlns:local="using:api"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<FontFamily x:Key="FontAwesomeRegular">avares://api/Assets/Fonts/FontAwesome/Regular#Font Awesome 6 Free</FontFamily>
+			<FontFamily x:Key="FontAwesomeSolid">avares://api/Assets/Fonts/FontAwesome/Solid#Font Awesome 6 Free</FontFamily>
+			<FontFamily x:Key="IBMPlexMonoRegular">avares://api/Assets/Fonts/IBMPlex/Regular#IBM Plex Mono</FontFamily>
+			<FontFamily x:Key="IBMPlexMonoItalic">avares://api/Assets/Fonts/IBMPlex/Italic#IBM Plex Mono</FontFamily>
+			<FontFamily x:Key="JetBrainsMonoRegular">avares://api/Assets/Fonts/JetBrainsMono/Regular#JetBrains Mono</FontFamily>
+			<FontFamily x:Key="JetBrainsMonoItalic">avares://api/Assets/Fonts/JetBrainsMono/Italic#JetBrains Mono</FontFamily>
+			<ResourceDictionary.ThemeDictionaries>
+				<ResourceDictionary x:Key='Light'>
+					<SolidColorBrush x:Key='BorderBrush'>#cccccc</SolidColorBrush>
+					<SolidColorBrush x:Key='ForegroundBrush'>#000000</SolidColorBrush>
+					<SolidColorBrush x:Key='BackgroundBrush'>#f3f3f3</SolidColorBrush>
+					<SolidColorBrush x:Key='BackgroundSecondaryBrush'>#fdfdfd</SolidColorBrush>
+					<SolidColorBrush x:Key='ForegroundSecondaryBrush'>#323232</SolidColorBrush>
+					<SolidColorBrush x:Key='InternalBorderBrush'>#ebebeb</SolidColorBrush>
+					<SolidColorBrush x:Key='ControlBorderBrush'>#ebebec</SolidColorBrush>
+					<SolidColorBrush x:Key='WindowBorderBrush'>#cccccc</SolidColorBrush>
+
+					<SolidColorBrush x:Key="NotificationCardBackgroundBrush" Color="White" />
+					<StaticResource x:Key="NotificationCardForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+					<SolidColorBrush x:Key="NotificationCardProgressBackgroundBrush" Color="#9A9A9A" />
+					<SolidColorBrush x:Key="NotificationCardInformationBackgroundBrush" Color="#0078D4" />
+					<SolidColorBrush x:Key="NotificationCardSuccessBackgroundBrush" Color="#128B44" />
+					<SolidColorBrush x:Key="NotificationCardWarningBackgroundBrush" Color="#FFC316" />
+					<SolidColorBrush x:Key="NotificationCardErrorBackgroundBrush" Color="#F03916" />
+				</ResourceDictionary>
+				<ResourceDictionary x:Key='Dark'>
+					<SolidColorBrush x:Key='BorderBrush'>#333333</SolidColorBrush>
+					<SolidColorBrush x:Key='ForegroundBrush'>#ffffff</SolidColorBrush>
+					<SolidColorBrush x:Key='BackgroundBrush'>#202020</SolidColorBrush>
+					<SolidColorBrush x:Key='BackgroundSecondaryBrush'>#323232</SolidColorBrush>
+					<SolidColorBrush x:Key='ForegroundSecondaryBrush'>#fdfdfd</SolidColorBrush>
+					<SolidColorBrush x:Key='InternalBorderBrush'>#1c1c1c</SolidColorBrush>
+					<SolidColorBrush x:Key='ControlBorderBrush'>#424242</SolidColorBrush>
+					<SolidColorBrush x:Key='WindowBorderBrush'>#1c1c1c</SolidColorBrush>
+
+					<SolidColorBrush x:Key="NotificationCardBackgroundBrush" Color="#444444" />
+					<StaticResource x:Key="NotificationCardForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+					<SolidColorBrush x:Key="NotificationCardProgressBackgroundBrush" Color="#9A9A9A" />
+					<SolidColorBrush x:Key="NotificationCardInformationBackgroundBrush" Color="#007ACC" Opacity="0.75" />
+					<SolidColorBrush x:Key="NotificationCardSuccessBackgroundBrush" Color="#1F9E45" Opacity="0.75" />
+					<SolidColorBrush x:Key="NotificationCardWarningBackgroundBrush" Color="#FDB328" Opacity="0.75" />
+					<SolidColorBrush x:Key="NotificationCardErrorBackgroundBrush" Color="#BD202C" Opacity="0.75" />
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>
