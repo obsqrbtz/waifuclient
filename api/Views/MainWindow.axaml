@@ -63,6 +63,11 @@
 							Name="CategoryCb"
 							SelectedItem="{Binding Category}"
 							ItemsSource="{Binding Categories}"/>
+						<Button
+							DockPanel.Dock="Top"
+							Margin="5"
+							Command="{Binding SaveClick}"
+							Content="Save waifu"/>
 						<ToggleSwitch
 							Margin="5"
 							DockPanel.Dock="Bottom"
