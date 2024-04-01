@@ -18,7 +18,7 @@ public class ApiWrapper
     private static HttpClient? _httpClient;
     private Waifu? _responseWaifu;
     private const string _apiUrl = "https://api.waifu.pics/";
-    public string? ProxyUrl = "http://192.168.6.4:3128";
+    public string? ProxyUrl = string.Empty; // "http://192.168.6.4:3128";
     public string? Url => _responseWaifu is not null 
         ? _responseWaifu.url
         : null;
