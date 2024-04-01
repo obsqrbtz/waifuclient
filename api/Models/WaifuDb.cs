@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using LiteDB;
 
 namespace api.Models;
@@ -8,11 +9,12 @@ public class WaifuDb : IDisposable
 {
     public LiteDatabase Db;
     private ILiteCollection<WaifuDbEntry> _collection;
-    private string _path = "waifu.db";
+    private string _path = string.Empty;
     private string _name = "Waifu";
     private bool _disposed = false;
-    public WaifuDb()
+    public WaifuDb(string path)
     {
+        _path = path;
         Db = new LiteDatabase(_path);
         _collection = Db.GetCollection<WaifuDbEntry>(_name);
     }

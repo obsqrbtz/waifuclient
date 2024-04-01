@@ -25,10 +25,21 @@
 						x:CompileBindings="False"
 						Command="{Binding $parent[Window].DataContext.OpenHome}"
 						Content="Home"/>
-					<DataGrid 
-						DockPanel.Dock="Top"
-						AutoGenerateColumns="True"
-						ItemsSource="{Binding Favs}"/>
+					<ScrollViewer>
+						<ItemsRepeater  ItemsSource="{Binding Waifus}">
+							<ItemsRepeater.Layout>
+								<WrapLayout
+									Orientation="Horizontal" />
+							</ItemsRepeater.Layout>
+							<ItemsRepeater.ItemTemplate>
+								<DataTemplate>
+									<Image
+										Height="300"
+										Source="{Binding}"/>
+								</DataTemplate>
+							</ItemsRepeater.ItemTemplate>
+						</ItemsRepeater>
+					</ScrollViewer>
 				</DockPanel>
 			</Border>
 	</ExperimentalAcrylicBorder>

@@ -1,5 +1,6 @@
 ﻿using System;
 using api.Models;
+using Avalonia.Controls;
 using ReactiveUI;
 
 
@@ -10,10 +11,14 @@ namespace api.ViewModels
         private ViewModelBase _contentViewModel;
         private WaifuDb _db;
         private bool _disposed = false;
+        private string _dbPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\waifu.db";
 
         public MainWindowViewModel()
         {
-            _db = new();
+            if (Design.IsDesignMode)
+                _db = new("_waifu.db");
+            else
+                _db = new(_dbPath);
             _contentViewModel = new HomeViewModel(_db);
         }
         public ViewModelBase ContentViewModel

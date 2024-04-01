@@ -15,5 +15,13 @@ namespace api.Views
         {
             InitializeComponent();
         }
+
+        private void WindowClosing(object? sender, WindowClosingEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel context) 
+            {
+                context.Dispose();
+            }
+        }
     }
 }
