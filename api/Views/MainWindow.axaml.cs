@@ -1,4 +1,5 @@
 using System;
+using api.Models;
 using api.ViewModels;
 using Avalonia;
 using Avalonia.Controls;
@@ -41,8 +42,8 @@ namespace api.Views
                 if (TypeCb.SelectedItem is string category)
                 {
                     context.Categories = category == "nsfw"
-                        ? [.. context.NsfwCategories]
-                        : [.. context.SfwCategories];
+                        ? [.. ApiWrapper.NsfwCategories]
+                        : [.. ApiWrapper.SfwCategories];
                     CategoryCb.SelectedIndex = 0;
                 }
             }

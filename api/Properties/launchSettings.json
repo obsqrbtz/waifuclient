@@ -1,0 +1,15 @@
+﻿{
+  "profiles": {
+    "api": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {
+        "DISPLAY": "192.168.6.157:0.0",
+        "LIBGL_ALWAYS_INDIRECT": "1"
+      },
+      "distributionName": ""
+    }
+  }
+}

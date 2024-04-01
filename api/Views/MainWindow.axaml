@@ -47,7 +47,7 @@
 							DockPanel.Dock="Top"
 							Margin="5"
 							HorizontalAlignment="Stretch"
-							Command="{Binding GetWaifu}"
+							Command="{Binding NextWaifu}"
 							Content="Get new waifu"/>
 						<ComboBox
 							DockPanel.Dock="Top"
