@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="api.Views.FavsView"
+			 xmlns:vm="using:api.ViewModels"
+			 x:DataType="vm:FavsViewModel">
+	<ExperimentalAcrylicBorder IsHitTestVisible="True" Name="TransparencyLayer">
+		<ExperimentalAcrylicBorder.Material>
+			<ExperimentalAcrylicMaterial
+				BackgroundSource="Digger"
+				TintColor="#ffffff"
+				TintOpacity="1"
+				MaterialOpacity="0.65" />
+		</ExperimentalAcrylicBorder.Material>
+			<Border
+				BorderThickness="1"
+				BorderBrush="{DynamicResource BorderBrush}">
+				<DockPanel>
+					<Button
+						DockPanel.Dock="Top"
+						Margin="5"
+						HorizontalContentAlignment="Center"
+						x:CompileBindings="False"
+						Command="{Binding $parent[Window].DataContext.OpenHome}"
+						Content="Home"/>
+					<DataGrid 
+						DockPanel.Dock="Top"
+						AutoGenerateColumns="True"
+						ItemsSource="{Binding Favs}"/>
+				</DockPanel>
+			</Border>
+	</ExperimentalAcrylicBorder>
+</UserControl>

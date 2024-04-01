@@ -14,39 +14,6 @@ namespace api.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            ActualThemeVariantChanged += ThemeVariantChanged;
-            TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light
-                ? Color.FromRgb(255, 255, 255)
-                : Color.FromRgb(0, 0, 0);
-        }
-
-        private void ThemeVariantChanged(object? sender, EventArgs e)
-        {
-            TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light
-                ? Color.FromRgb(255, 255, 255)
-                : Color.FromRgb(0, 0, 0);
-        }
-        private void ThemeToggleClick(object? sender, RoutedEventArgs e)
-        {
-            if (sender is not Button || Application.Current is null) return;
-            Application.Current.RequestedThemeVariant =
-                ActualThemeVariant == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark;
-            TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
-        }
-
-        private void TypeSelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            if (DataContext is MainWindowViewModel context)
-            {
-                if (TypeCb.SelectedItem is string category)
-                {
-                    context.Categories = category == "nsfw"
-                        ? [.. ApiWrapper.NsfwCategories]
-                        : [.. ApiWrapper.SfwCategories];
-                    CategoryCb.SelectedIndex = 0;
-                }
-            }
         }
     }
 }

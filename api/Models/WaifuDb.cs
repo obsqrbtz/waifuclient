@@ -36,6 +36,15 @@ public class WaifuDb : IDisposable
         }
     }
     public IEnumerable<WaifuDbEntry> FetchAll() => _collection.FindAll();
+    public IEnumerable<WaifuDbEntry> FetchLiked() => _collection.Find(x => x.Liked);
+
+    public void Update(IEnumerable<WaifuDbEntry> entries)
+    {
+        foreach(var entry in entries)
+        {
+            _ = _collection.Update(entry);
+        }
+    }
 
     protected virtual void Dispose(bool disposing)
     {
