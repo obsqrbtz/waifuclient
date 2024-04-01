@@ -4,7 +4,7 @@ using LiteDB;
 class Program
 {
     private static ApiWrapper? _apiWrapper;
-    private static WaifuDb _db;
+    private static WaifuDb? _db;
     public static void Main()
     {
         _apiWrapper = new();

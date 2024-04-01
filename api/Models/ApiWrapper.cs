@@ -13,12 +13,13 @@ public class Waifu
 {
     public string url { get; set; } = string.Empty;
 }
-public class ApiWrapper
+public class ApiWrapper : IDisposable
 {
     private static HttpClient? _httpClient;
     private Waifu? _responseWaifu;
     private const string _apiUrl = "https://api.waifu.pics/";
     public string? ProxyUrl = string.Empty; // "http://192.168.6.4:3128";
+    private bool _disposed = false;
     public string? Url => _responseWaifu is not null 
         ? _responseWaifu.url
         : null;
@@ -114,5 +115,25 @@ public class ApiWrapper
             WaifuStream = null;
         }
         return WaifuStream;
+    }
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing && _httpClient is not null)
+            {
+                _httpClient.Dispose();
+            }
+            _disposed = true;
+        }
+    }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    ~ApiWrapper()
+    {
+        Dispose(false);
     }
 }

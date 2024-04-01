@@ -12,9 +12,11 @@ using ReactiveUI.Fody.Helpers;
 
 namespace api.ViewModels
 {
-    public class MainWindowViewModel : ReactiveObject
+    public class MainWindowViewModel : ReactiveObject, IDisposable
     {
         private static ApiWrapper? _apiWrapper;
+        private WaifuDb _db;
+        private bool _disposed = false;
         [Reactive] public string Type { get; set; }
         [Reactive] public string? Category { get; set; }
         [Reactive] public List<string> Types { get; set; } = ApiWrapper.Types;
@@ -26,18 +28,20 @@ namespace api.ViewModels
             Type = Types[0];
             Category = Categories[0];
             _apiWrapper = new();
-            NextWaifu();
+            _db = new();
+            //NextWaifu();
         }
 
-        public void SaveImage(Bitmap waifu, string path)
-        {
-            waifu.Save(path);
-        }
+        public static void SaveImage(Bitmap waifu, string path) => waifu.Save(path);
         public async void NextWaifu()
         {
             if (_apiWrapper is null || Category is null)
                 return;
             Stream? stream = await _apiWrapper.GetWaifu(Type, Category);
+            if (_apiWrapper.Url is not null && !_db.EntryExists(_apiWrapper.Url))
+            {
+                _db.Add(_apiWrapper.Url, Type, Category);
+            }
             if (stream is not null)
                 Waifu = new Bitmap(stream);
         }
@@ -55,6 +59,27 @@ namespace api.ViewModels
             });
             if (file is not null)
                 SaveImage(Waifu, file.Path.LocalPath);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing && _apiWrapper is not null)
+                {
+                    _db.Dispose();
+                    _apiWrapper.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~MainWindowViewModel()
+        {
+            Dispose(false);
         }
     }
 }

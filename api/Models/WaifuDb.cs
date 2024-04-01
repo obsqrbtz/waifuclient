@@ -4,47 +4,66 @@ using LiteDB;
 
 namespace api.Models;
 
-public class WaifuDb
+public class WaifuDb : IDisposable
 {
     public LiteDatabase Db;
     private ILiteCollection<WaifuDbEntry> _collection;
+    private string _path = "waifu.db";
+    private string _name = "Waifu";
+    private bool _disposed = false;
     public WaifuDb()
     {
-        Db = new LiteDatabase("waifu.db");
-        _collection = Db.GetCollection<WaifuDbEntry>("Waifu");
+        Db = new LiteDatabase(_path);
+        _collection = Db.GetCollection<WaifuDbEntry>(_name);
     }
     public bool EntryExists(string url)
     {
-        var existingItems = _collection.FindOne(x => x.Url == url);
+        WaifuDbEntry? existingItems = _collection.FindOne(x => x.Url == url);
         return existingItems is not null;
     }
     public void Add(string url, string type, string category)
     {
         if (!EntryExists(url))
         {
-            var waifu = new WaifuDbEntry
+            WaifuDbEntry waifu = new()
             { 
                 Url = url,
                 Type = type,
                 Category = category
             };
-            _collection.Insert(waifu);
-            _collection.EnsureIndex(x => x.Url);
+            _ = _collection.Insert(waifu);
+            _ = _collection.EnsureIndex(x => x.Url);
         }
     }
-    public IEnumerable<WaifuDbEntry> FetchAll()
+    public IEnumerable<WaifuDbEntry> FetchAll() => _collection.FindAll();
+
+    protected virtual void Dispose(bool disposing)
     {
-        return _collection.FindAll();
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                Db.Dispose();
+            }              
+            _disposed = true;
+        }
+    }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    ~WaifuDb()
+    {
+        Dispose(false);
     }
 }
 public class WaifuDbEntry
 {
     public int Id { get; set; }
-    public string Url {get; set;}
-    public string Type {get; set;}
-    public string Category {get; set;}
-    public override string ToString()
-    {
-        return $"{Id} | {Url} | {Type} | {Category}";
-    }
+    public string Url { get; set; } = string.Empty;
+    public string Type {get; set;} = string.Empty;
+    public string Category {get; set;} = string.Empty;
+    public bool Liked { get; set; }
+    public override string ToString() => $"{Id} | {Url} | {Type} | {Category}";
 }
