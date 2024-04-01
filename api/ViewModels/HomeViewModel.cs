@@ -17,6 +17,7 @@ namespace api.ViewModels
         private static ApiWrapper? _apiWrapper;
         private WaifuDb _db;
         private bool _disposed = false;
+        [Reactive] public bool Liked {get; set;}
         [Reactive] public string Type { get; set; }
         [Reactive] public string? Category { get; set; }
         [Reactive] public List<string> Types { get; set; } = ApiWrapper.Types;
@@ -38,9 +39,17 @@ namespace api.ViewModels
             if (_apiWrapper is null || Category is null)
                 return;
             Stream? stream = await _apiWrapper.GetWaifu(Type, Category);
-            if (_apiWrapper.Url is not null && !_db.EntryExists(_apiWrapper.Url))
+            if (_apiWrapper.Url is null)
+                return;
+            WaifuDbEntry? waifu = _db.EntryExists(_apiWrapper.Url);
+            if (waifu is null)
             {
                 _db.Add(_apiWrapper.Url, Type, Category);
+                Liked = false;
+            }
+            else
+            {
+                Liked = waifu.Liked;    
             }
             if (stream is not null)
                 Waifu = new Bitmap(stream);
@@ -59,6 +68,11 @@ namespace api.ViewModels
             });
             if (file is not null)
                 SaveImage(Waifu, file.Path.LocalPath);
+        }
+        public void LikeClick()
+        {
+            if (_apiWrapper is not null && _apiWrapper.Url is not null)
+                _db.ToggleLike(_apiWrapper.Url);
         }
         protected virtual void Dispose(bool disposing)
         {

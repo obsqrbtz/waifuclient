@@ -52,6 +52,13 @@
 							Name="CategoryCb"
 							SelectedItem="{Binding Category}"
 							ItemsSource="{Binding Categories}"/>
+						<ToggleButton
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							Margin="5"
+							IsChecked = "{Binding Liked}"
+							Command="{Binding LikeClick}"
+							Content="Like"/>
 						<Button
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"

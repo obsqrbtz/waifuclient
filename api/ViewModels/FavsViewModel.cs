@@ -13,6 +13,7 @@ namespace api.ViewModels
         {
             _db = db;
             Favs = _db.FetchLiked().ToList();
+            //Favs = _db.FetchAll().ToList();
         }
     }
 }

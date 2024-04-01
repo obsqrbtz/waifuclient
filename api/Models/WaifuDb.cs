@@ -16,14 +16,22 @@ public class WaifuDb : IDisposable
         Db = new LiteDatabase(_path);
         _collection = Db.GetCollection<WaifuDbEntry>(_name);
     }
-    public bool EntryExists(string url)
+    public WaifuDbEntry? EntryExists(string url)
     {
-        WaifuDbEntry? existingItems = _collection.FindOne(x => x.Url == url);
-        return existingItems is not null;
+        return _collection.FindOne(x => x.Url == url);
+    }
+    public void ToggleLike(string url)
+    {
+        WaifuDbEntry? waifu = _collection.FindOne(x => x.Url == url);
+        if (waifu is not null)
+        {
+            waifu.Liked = !waifu.Liked;
+            _collection.Update(waifu);
+        }
     }
     public void Add(string url, string type, string category)
     {
-        if (!EntryExists(url))
+        if (EntryExists(url) is null)
         {
             WaifuDbEntry waifu = new()
             { 
