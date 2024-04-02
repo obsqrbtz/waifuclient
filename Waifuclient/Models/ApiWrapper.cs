@@ -103,6 +103,10 @@ public class ApiWrapper : IDisposable
             return null;
         return await DownloadImage(_responseWaifu.url);
     }
+    public async Task<Stream?> GetImageStream(string url)
+    {
+        return await DownloadImage(url);
+    }
     private async Task<Stream?> DownloadImage(string url)
     {
         try

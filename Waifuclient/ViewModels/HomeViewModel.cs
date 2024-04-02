@@ -9,11 +9,14 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using LiteDB;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 
 
 namespace Waifuclient.ViewModels
 {
-    public class HomeViewModel : ViewModelBase, IDisposable
+    public class HomeViewModel : ViewModelBase
     {
         private static ApiWrapper? _apiWrapper;
         private WaifuDb _db;
@@ -25,11 +28,11 @@ namespace Waifuclient.ViewModels
         [Reactive] public List<string> Categories { get; set; } = ApiWrapper.SfwCategories;
         [Reactive] public Bitmap? Waifu { get; set; }
 
-        public HomeViewModel(WaifuDb db)
+        public HomeViewModel(WaifuDb db, ApiWrapper apiWrapper)
         {
+            _apiWrapper = apiWrapper;
             Type = Types[0];
             Category = Categories[0];
-            _apiWrapper = new();
             _db = db;
             NextWaifu();
         }
@@ -60,13 +63,29 @@ namespace Waifuclient.ViewModels
             }
             if (stream is not null && waifu is not null)
             {
-                Waifu = new Bitmap(stream);
-                string filename = waifu.Url.Split('/')[^1];
+                Waifu = await CreateBitmap(stream);
+                string filename = waifu.Url.Split('/')[^1]; 
                 Waifu.Save(filename);
                 var storage = _db.Db.GetStorage<int>();
                 stream.Position = 0;
                 storage.Upload(waifu.Id, filename, stream);
             }
+        }
+        private static async Task<Bitmap> CreateBitmap(Stream stream)
+        {
+            double windowHeight = 1080;
+            var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+            if (mainWindow is not null)
+                windowHeight = mainWindow.Height;
+            return await Task.Run(() =>
+            {
+                stream.Position = 0;
+                var bitmap = new Bitmap(stream);
+                double scale = 1.00;
+                if (bitmap.Size.Height >= windowHeight)
+                    scale = (windowHeight / bitmap.Size.Height);
+                return bitmap.CreateScaledBitmap(new PixelSize((int)(bitmap.Size.Width * scale), (int)(bitmap.Size.Height * scale)));
+            });
         }
         public async void SaveClick()
         {
@@ -87,26 +106,6 @@ namespace Waifuclient.ViewModels
         {
             if (_apiWrapper is not null && _apiWrapper.Url is not null)
                 _db.ToggleLike(_apiWrapper.Url);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing && _apiWrapper is not null)
-                {
-                    _apiWrapper.Dispose();
-                }
-                _disposed = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        ~HomeViewModel()
-        {
-            Dispose(false);
         }
     }
 }

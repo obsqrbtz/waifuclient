@@ -5,6 +5,9 @@ using Avalonia.Styling;
 using Avalonia.Media;
 using Avalonia;
 using Waifuclient.ViewModels;
+using Waifuclient.Models;
+using ReactiveUI;
+using Avalonia.Threading;
 
 namespace Waifuclient.Views
 {
@@ -36,7 +39,40 @@ namespace Waifuclient.Views
         {
             if (DataContext is FavsViewModel context && Pagination.SelectedItem is int page)
             {
-                context.SetThumbnails(page);
+                if (e.RemovedItems.Count == 0 && page != 1 || e.RemovedItems.Count == 1)
+                    context.SetThumbnails(page);
+            }
+        }
+        private void TypeSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is FavsViewModel context)
+            {
+                if (TypeCb.SelectedItem is string category)
+                {
+                    context.Categories = category switch
+                    {
+                        "sfw" => ["all", ..ApiWrapper.SfwCategories],
+                        "nsfw" => ["all", ..ApiWrapper.NsfwCategories],
+                        _ => ["all", ..ApiWrapper.SfwCategories, ..ApiWrapper.NsfwCategories]
+                    };
+                    CategoryCb.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void CategorySelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is FavsViewModel context && e.RemovedItems.Count == 1)
+            {
+                if (CategoryCb.SelectedItem is string category)
+                {
+                    Pagination.SelectionChanged -= PaginationSelectionChanged;
+                    context.Favs = context.FetchCategory(category);
+                    context.SetPages();
+                    context.SetThumbnails(1);
+                    Pagination.SelectedIndex = 0;
+                    Pagination.SelectionChanged += PaginationSelectionChanged;
+                }
             }
         }
     }

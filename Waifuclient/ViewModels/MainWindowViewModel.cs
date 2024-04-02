@@ -10,16 +10,18 @@ namespace Waifuclient.ViewModels
     {
         private ViewModelBase _contentViewModel;
         private WaifuDb _db;
+        private ApiWrapper _apiWrapper;
         private bool _disposed = false;
         private string _dbPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\waifu.db";
 
         public MainWindowViewModel()
         {
+            _apiWrapper = new();
             if (Design.IsDesignMode)
                 _db = new("_waifu.db");
             else
                 _db = new(_dbPath);
-            _contentViewModel = new HomeViewModel(_db);
+            _contentViewModel = new HomeViewModel(_db, _apiWrapper);
         }
         public ViewModelBase ContentViewModel
         {
@@ -29,8 +31,7 @@ namespace Waifuclient.ViewModels
         public void OpenFavs()
         {
             if (ContentViewModel is HomeViewModel vm)
-                vm.Dispose();
-            ContentViewModel = new FavsViewModel(_db);
+            ContentViewModel = new FavsViewModel(_db, _apiWrapper);
         }
         public void OpenHome()
         {
@@ -38,7 +39,7 @@ namespace Waifuclient.ViewModels
             {
                 _db.Update(vm.Favs);
             }
-            ContentViewModel = new HomeViewModel(_db);
+            ContentViewModel = new HomeViewModel(_db, _apiWrapper);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -48,6 +49,7 @@ namespace Waifuclient.ViewModels
                 if (disposing)
                 {
                     _db.Dispose();
+                    _apiWrapper.Dispose();
                 }
                 _disposed = true;
             }

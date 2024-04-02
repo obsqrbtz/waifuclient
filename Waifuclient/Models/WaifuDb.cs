@@ -46,6 +46,7 @@ public class WaifuDb : IDisposable
     }
     public IEnumerable<WaifuDbEntry> FetchAll() => _collection.FindAll();
     public IEnumerable<WaifuDbEntry> FetchLiked() => _collection.Find(x => x.Liked);
+    public IEnumerable<WaifuDbEntry> FetchCategoryLiked(string category) => _collection.Find(x => x.Category == category && x.Liked);
 
     public void Update(IEnumerable<WaifuDbEntry> entries)
     {
