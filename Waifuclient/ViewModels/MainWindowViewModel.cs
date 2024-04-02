@@ -1,10 +1,10 @@
 ﻿using System;
-using api.Models;
+using Waifuclient.Models;
 using Avalonia.Controls;
 using ReactiveUI;
 
 
-namespace api.ViewModels
+namespace Waifuclient.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {

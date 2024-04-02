@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using LiteDB;
 
-namespace api.Models;
+namespace Waifuclient.Models;
 
 public class WaifuDb : IDisposable
 {

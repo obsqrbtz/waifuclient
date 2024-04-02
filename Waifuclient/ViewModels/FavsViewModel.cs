@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using api.Models;
+using Waifuclient.Models;
 using Avalonia.Media.Imaging;
 using LiteDB;
 using ReactiveUI.Fody.Helpers;
 
-namespace api.ViewModels
+namespace Waifuclient.ViewModels
 {
     public class FavViewItem
     {

@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace api.Models;
+namespace Waifuclient.Models;
 
 public class Waifu
 {

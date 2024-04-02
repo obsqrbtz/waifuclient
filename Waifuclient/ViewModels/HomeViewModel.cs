@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using api.Models;
+using Waifuclient.Models;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
@@ -11,7 +11,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 
-namespace api.ViewModels
+namespace Waifuclient.ViewModels
 {
     public class HomeViewModel : ViewModelBase, IDisposable
     {

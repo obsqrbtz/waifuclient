@@ -1,17 +1,16 @@
-using api.Models;
-using api.ViewModels;
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
 using Avalonia.Media;
 using Avalonia;
+using Waifuclient.ViewModels;
 
-namespace api.Views
+namespace Waifuclient.Views
 {
-    public partial class HomeView : UserControl
+    public partial class FavsView : UserControl
     {
-        public HomeView()
+        public FavsView()
         {
             InitializeComponent();
             ActualThemeVariantChanged += ThemeVariantChanged;
@@ -33,17 +32,11 @@ namespace api.Views
             TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
         }
 
-        private void TypeSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        private void PaginationSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is HomeViewModel context)
+            if (DataContext is FavsViewModel context && Pagination.SelectedItem is int page)
             {
-                if (TypeCb.SelectedItem is string category)
-                {
-                    context.Categories = category == "nsfw"
-                        ? [.. ApiWrapper.NsfwCategories]
-                        : [.. ApiWrapper.SfwCategories];
-                    CategoryCb.SelectedIndex = 0;
-                }
+                context.SetThumbnails(page);
             }
         }
     }

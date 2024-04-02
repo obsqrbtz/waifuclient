@@ -1,10 +1,10 @@
-using api.ViewModels;
-using api.Views;
+using Waifuclient.ViewModels;
+using Waifuclient.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace api
+namespace Waifuclient
 {
     public partial class App : Application
     {

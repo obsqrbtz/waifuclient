@@ -1,9 +1,9 @@
 using System;
-using api.ViewModels;
+using Waifuclient.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-namespace api
+namespace Waifuclient
 {
     public class ViewLocator : IDataTemplate
     {

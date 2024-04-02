@@ -2,7 +2,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace api
+namespace Waifuclient
 {
     internal sealed class Program
     {

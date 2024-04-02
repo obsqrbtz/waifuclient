@@ -1,13 +1,13 @@
 using System;
-using api.Models;
-using api.ViewModels;
+using Waifuclient.Models;
+using Waifuclient.ViewModels;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Styling;
 
-namespace api.Views
+namespace Waifuclient.Views
 {
     public partial class MainWindow : Window
     {

@@ -3,8 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="api.Views.HomeView"
-			 xmlns:vm="using:api.ViewModels"
+             x:Class="Waifuclient.Views.HomeView"
+			 xmlns:vm="using:Waifuclient.ViewModels"
 			 x:DataType="vm:HomeViewModel">
 	
 	<ExperimentalAcrylicBorder IsHitTestVisible="True" Name="TransparencyLayer">
@@ -25,7 +25,7 @@
 						Margin="5"
 						FontFamily="{StaticResource JetBrainsMonoRegular}"
 						FontSize="14"
-						Text="Waifu API test"/>
+						Text="Waifuclient"/>
 					<Label/>
 				</DockPanel>
 				<DockPanel>
@@ -36,7 +36,7 @@
 							Margin="5"
 							HorizontalAlignment="Stretch"
 							Command="{Binding NextWaifu}"
-							Content="Get new waifu"/>
+							Content="Next waifu"/>
 						<ComboBox
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"

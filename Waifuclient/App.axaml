@@ -3,8 +3,8 @@
 			 xmlns:sty="using:FluentAvalonia.Styling"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-             x:Class="api.App"
-             xmlns:local="using:api"
+             x:Class="Waifuclient.App"
+             xmlns:local="using:Waifuclient"
              RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
@@ -20,12 +20,12 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
-			<FontFamily x:Key="FontAwesomeRegular">avares://api/Assets/Fonts/FontAwesome/Regular#Font Awesome 6 Free</FontFamily>
-			<FontFamily x:Key="FontAwesomeSolid">avares://api/Assets/Fonts/FontAwesome/Solid#Font Awesome 6 Free</FontFamily>
-			<FontFamily x:Key="IBMPlexMonoRegular">avares://api/Assets/Fonts/IBMPlex/Regular#IBM Plex Mono</FontFamily>
-			<FontFamily x:Key="IBMPlexMonoItalic">avares://api/Assets/Fonts/IBMPlex/Italic#IBM Plex Mono</FontFamily>
-			<FontFamily x:Key="JetBrainsMonoRegular">avares://api/Assets/Fonts/JetBrainsMono/Regular#JetBrains Mono</FontFamily>
-			<FontFamily x:Key="JetBrainsMonoItalic">avares://api/Assets/Fonts/JetBrainsMono/Italic#JetBrains Mono</FontFamily>
+			<FontFamily x:Key="FontAwesomeRegular">avares://Waifuclient/Assets/Fonts/FontAwesome/Regular#Font Awesome 6 Free</FontFamily>
+			<FontFamily x:Key="FontAwesomeSolid">avares://Waifuclient/Assets/Fonts/FontAwesome/Solid#Font Awesome 6 Free</FontFamily>
+			<FontFamily x:Key="IBMPlexMonoRegular">avares://Waifuclient/Assets/Fonts/IBMPlex/Regular#IBM Plex Mono</FontFamily>
+			<FontFamily x:Key="IBMPlexMonoItalic">avares://Waifuclient/Assets/Fonts/IBMPlex/Italic#IBM Plex Mono</FontFamily>
+			<FontFamily x:Key="JetBrainsMonoRegular">avares://Waifuclient/Assets/Fonts/JetBrainsMono/Regular#JetBrains Mono</FontFamily>
+			<FontFamily x:Key="JetBrainsMonoItalic">avares://Waifuclient/Assets/Fonts/JetBrainsMono/Italic#JetBrains Mono</FontFamily>
 			<ResourceDictionary.ThemeDictionaries>
 				<ResourceDictionary x:Key='Light'>
 					<SolidColorBrush x:Key='BorderBrush'>#cccccc</SolidColorBrush>

@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace api.ViewModels
+namespace Waifuclient.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {
