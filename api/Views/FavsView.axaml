@@ -26,9 +26,9 @@
 						Command="{Binding $parent[Window].DataContext.OpenHome}"
 						Content="Home"/>
 					<ScrollViewer>
-						<ItemsRepeater  ItemsSource="{Binding Waifus}">
+						<ItemsRepeater ItemsSource="{Binding Waifus}">
 							<ItemsRepeater.Layout>
-								<WrapLayout
+								<UniformGridLayout
 									Orientation="Horizontal" />
 							</ItemsRepeater.Layout>
 							<ItemsRepeater.ItemTemplate>

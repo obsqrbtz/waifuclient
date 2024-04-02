@@ -45,14 +45,22 @@ namespace api.ViewModels
             if (waifu is null)
             {
                 _db.Add(_apiWrapper.Url, Type, Category);
+                waifu = _db.EntryExists(_apiWrapper.Url);
                 Liked = false;
             }
             else
             {
                 Liked = waifu.Liked;    
             }
-            if (stream is not null)
+            if (stream is not null && waifu is not null)
+            {
                 Waifu = new Bitmap(stream);
+                string filename = waifu.Url.Split('/')[^1];
+                Waifu.Save(filename);
+                var storage = _db.Db.GetStorage<int>();
+                stream.Position = 0;
+                storage.Upload(waifu.Id, filename, stream);
+            }
         }
         public async void SaveClick()
         {

@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using api.Models;
 using Avalonia.Media.Imaging;
+using DynamicData;
+using LiteDB;
 using ReactiveUI.Fody.Helpers;
 
 namespace api.ViewModels
@@ -24,7 +26,7 @@ namespace api.ViewModels
             _db = db;
             _httpClient = new();
             Favs = _db.FetchLiked().ToList();
-            SetBitmaps();
+            SetThumbnails();
             //Favs = _db.FetchAll().ToList();
         }
         private async Task<Bitmap?> DownloadImage(string url)
@@ -47,18 +49,32 @@ namespace api.ViewModels
             }
             return bitmap;
         }
-        private async void SetBitmaps()
+        private async void SetThumbnails()
         {
             int max = Favs.Count <= 30 ? Favs.Count : 30;
-            for(int i = 0; i < max; i++)
+            var storage = _db.Db.GetStorage<int>();
+            for (int i = 0; i < max; i++)
             {
-                var bitmap = await DownloadImage(Favs[i].Url);
-                if (bitmap is not null)
+                //var bitmap = await DownloadImage(Favs[i].Url);
+                await Task.Run(async () =>
                 {
-                    Waifus.Add(bitmap);
+                    Waifus.Add(await CreateThumbnail(storage, Favs[i].Id));
                     Waifus = new(Waifus);
-                }
+                });
             }
         }
+        private static async Task<Bitmap> CreateThumbnail(ILiteStorage<int> storage, int id)
+        {
+            return await Task.Run(() =>
+            {
+                Stream stream = new MemoryStream();
+                storage.Download(id, stream);
+                stream.Position = 0;
+                var bitmap = new Bitmap(stream);
+                double scale = (300.00 / bitmap.Size.Height);
+                return bitmap.CreateScaledBitmap(new Avalonia.PixelSize((int)(bitmap.Size.Width * scale), (int)(bitmap.Size.Height * scale)));
+            });
+        }
+
     }
 }
