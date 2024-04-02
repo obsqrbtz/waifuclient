@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using api.Models;
 using Avalonia;
@@ -38,19 +39,24 @@ namespace api.ViewModels
         {
             if (_apiWrapper is null || Category is null)
                 return;
-            Stream? stream = await _apiWrapper.GetWaifu(Type, Category);
+            await _apiWrapper.GetWaifuInfo(Type, Category);
             if (_apiWrapper.Url is null)
                 return;
             WaifuDbEntry? waifu = _db.EntryExists(_apiWrapper.Url);
+            Stream? stream = new MemoryStream();
             if (waifu is null)
             {
                 _db.Add(_apiWrapper.Url, Type, Category);
                 waifu = _db.EntryExists(_apiWrapper.Url);
                 Liked = false;
+                stream = await _apiWrapper.GetImageStream();
             }
             else
             {
-                Liked = waifu.Liked;    
+                Liked = waifu.Liked;
+                var storage = _db.Db.GetStorage<int>();
+                storage.Download(waifu.Id, stream);
+                stream.Position = 0;
             }
             if (stream is not null && waifu is not null)
             {

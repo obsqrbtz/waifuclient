@@ -89,13 +89,16 @@ public class ApiWrapper : IDisposable
             _httpClient = new();
         }
     }
-    public async Task<Stream?> GetWaifu(string type, string category)
+    public async Task GetWaifuInfo(string type, string category)
     {
         if (_httpClient is null)
-            return null;
+            return;
         string url = $"{_apiUrl}{type}/{category}";
         string response = await _httpClient.GetStringAsync(url);
         _responseWaifu = JsonSerializer.Deserialize<Waifu>(response);
+    }
+    public async Task<Stream?> GetImageStream()
+    {
         if (_responseWaifu is null)
             return null;
         return await DownloadImage(_responseWaifu.url);
