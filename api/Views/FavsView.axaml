@@ -18,6 +18,20 @@
 				BorderThickness="1"
 				BorderBrush="{DynamicResource BorderBrush}">
 				<DockPanel>
+					<DockPanel
+						HorizontalAlignment="Center"
+						DockPanel.Dock="Bottom">
+						<ListBox 
+							Name="Pagination"
+							ItemsSource="{Binding Pages}"
+							SelectionChanged="PaginationSelectionChanged">
+							<ListBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<StackPanel Orientation="Horizontal"/>
+								</ItemsPanelTemplate>
+							</ListBox.ItemsPanel>
+						</ListBox>
+					</DockPanel>
 					<Button
 						DockPanel.Dock="Top"
 						Margin="5"
@@ -25,21 +39,55 @@
 						x:CompileBindings="False"
 						Command="{Binding $parent[Window].DataContext.OpenHome}"
 						Content="Home"/>
-					<ScrollViewer>
-						<ItemsRepeater ItemsSource="{Binding Waifus}">
-							<ItemsRepeater.Layout>
-								<UniformGridLayout
-									Orientation="Horizontal" />
-							</ItemsRepeater.Layout>
-							<ItemsRepeater.ItemTemplate>
-								<DataTemplate>
-									<Image
-										Height="300"
-										Source="{Binding}"/>
-								</DataTemplate>
-							</ItemsRepeater.ItemTemplate>
-						</ItemsRepeater>
-					</ScrollViewer>
+					<Border
+						CornerRadius="7"
+						Margin="5"
+						Background="{DynamicResource BackgroundBrush}">
+						<ScrollViewer>
+							<ItemsRepeater 
+								ItemsSource="{Binding Waifus}">
+								<ItemsRepeater.Layout>
+									<UniformGridLayout
+										MinColumnSpacing="0"
+										MinRowSpacing="0"
+										Orientation="Horizontal" />
+								</ItemsRepeater.Layout>
+								<ItemsRepeater.ItemTemplate>
+									<DataTemplate>
+										<Border
+											CornerRadius="7"
+											BorderThickness="0"
+											Background="{DynamicResource BackgroundSecondaryBrush}"
+											Margin="5"
+											BorderBrush="{DynamicResource BorderBrush}">
+											<DockPanel
+												Margin="10">
+												<DockPanel
+													VerticalAlignment="Center"
+													HorizontalAlignment="Center"
+													DockPanel.Dock="Bottom">
+													<ToggleButton
+														DockPanel.Dock="Left"
+														Margin="5"
+														IsChecked = "{Binding DbEntry.Liked}"
+														Content="Like"/>
+													<Button
+														DockPanel.Dock="Left"
+														Margin="5"
+														Content="View"/>
+												</DockPanel>
+												<Image
+													DockPanel.Dock="Top"
+													Width="250"
+													Stretch="UniformToFill"
+													Source="{Binding Image}"/>
+											</DockPanel>
+										</Border>
+									</DataTemplate>
+								</ItemsRepeater.ItemTemplate>
+							</ItemsRepeater>
+						</ScrollViewer>
+					</Border>
 				</DockPanel>
 			</Border>
 	</ExperimentalAcrylicBorder>

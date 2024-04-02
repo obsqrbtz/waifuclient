@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Styling;
 using Avalonia.Media;
 using Avalonia;
+using api.ViewModels;
 
 namespace api.Views
 {
@@ -29,6 +30,14 @@ namespace api.Views
             Application.Current.RequestedThemeVariant =
                 ActualThemeVariant == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark;
             TransparencyLayer.Material.TintColor = ActualThemeVariant == ThemeVariant.Light ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
+        }
+
+        private void PaginationSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is FavsViewModel context && Pagination.SelectedItem is int page)
+            {
+                context.SetThumbnails(page);
+            }
         }
     }
 }

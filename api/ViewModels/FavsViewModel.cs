@@ -7,26 +7,45 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using api.Models;
 using Avalonia.Media.Imaging;
-using DynamicData;
 using LiteDB;
 using ReactiveUI.Fody.Helpers;
 
 namespace api.ViewModels
 {
+    public class FavViewItem
+    {
+        public WaifuDbEntry? DbEntry { get; set; }
+        public Bitmap? Image { get; set; }
+    }
     public class FavsViewModel : ViewModelBase
     {
         private WaifuDb _db;
         private HttpClient _httpClient;
+        private int _maxItems = 30;
+        private int _currentItem = 0;
+        private int _pages = 1;
 
-        [Reactive] public List<Bitmap?> Waifus { get; set; }
-        [Reactive]public List<WaifuDbEntry> Favs { get; set; }
+        [Reactive] public List<int> Pages { get; set; }
+        [Reactive] public List<FavViewItem> Waifus { get; set; }
+        public List<WaifuDbEntry> Favs { get; set; }
         public FavsViewModel(WaifuDb db)
         {
             Waifus = [];
+            Pages = [];
             _db = db;
             _httpClient = new();
             Favs = _db.FetchLiked().ToList();
-            SetThumbnails();
+            _pages = Favs.Count / _maxItems;
+            if (Favs.Count % _maxItems > 0)
+            {
+                _pages++;
+            } 
+            for (int i = 1; i <= _pages; i++)
+            {
+                Pages.Add(i);
+            }
+            Pages = [.. Pages];
+            SetThumbnails(1);
             //Favs = _db.FetchAll().ToList();
         }
         private async Task<Bitmap?> DownloadImage(string url)
@@ -49,16 +68,25 @@ namespace api.ViewModels
             }
             return bitmap;
         }
-        private async void SetThumbnails()
+        public async void SetThumbnails(int page)
         {
-            int max = Favs.Count <= 30 ? Favs.Count : 30;
-            var storage = _db.Db.GetStorage<int>();
-            for (int i = 0; i < max; i++)
+            _currentItem = page * _maxItems - _maxItems;
+            int max = _currentItem + _maxItems;
+            if (Favs.Count < max)
             {
-                //var bitmap = await DownloadImage(Favs[i].Url);
+                max = Favs.Count;
+            }
+            Waifus = [];
+            var storage = _db.Db.GetStorage<int>();
+            for (int i = _currentItem; i < max; i++)
+            {
                 await Task.Run(async () =>
                 {
-                    Waifus.Add(await CreateThumbnail(storage, Favs[i].Id));
+                    Waifus.Add(new() 
+                    { 
+                        DbEntry = Favs[i], 
+                        Image = await CreateThumbnail(storage, Favs[i].Id) 
+                    });
                     Waifus = new(Waifus);
                 });
             }
@@ -71,7 +99,7 @@ namespace api.ViewModels
                 storage.Download(id, stream);
                 stream.Position = 0;
                 var bitmap = new Bitmap(stream);
-                double scale = (300.00 / bitmap.Size.Height);
+                double scale = (450.00 / bitmap.Size.Height);
                 return bitmap.CreateScaledBitmap(new Avalonia.PixelSize((int)(bitmap.Size.Width * scale), (int)(bitmap.Size.Height * scale)));
             });
         }
