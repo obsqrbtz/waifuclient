@@ -43,7 +43,9 @@ jobs:
         sudo apt install -y zip
 
     - name: Update changelog
-      run: npm exec -c 'git-cliff --current --output CHANGELOG.md'
+      run: |
+          npm update
+          npm exec -c 'git-cliff --current --output CHANGELOG.md'
     
     #- name: Execute unit tests
     #  run: dotnet test
