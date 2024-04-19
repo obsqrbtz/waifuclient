@@ -46,12 +46,18 @@ jobs:
       run: |
           npm update
           npm exec -c 'git-cliff --current --output ${{ github.workspace }}/CHANGELOG.md'
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
     
     #- name: Execute unit tests
     #  run: dotnet test
 
     - name: Build
       run: |
+        dotnet-gitversion /updateprojectfiles
         dotnet publish -c Release -r win-x64 --self-contained
         dotnet publish -c Release -r linux-x64 --self-contained
         
