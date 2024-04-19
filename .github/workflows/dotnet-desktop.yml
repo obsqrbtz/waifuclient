@@ -43,7 +43,6 @@ jobs:
         sudo apt install -y zip
 
     - name: Update changelog
-      if: startsWith(github.ref, 'refs/tags/')
       run: npm exec -c 'git-cliff --current --output CHANGELOG.md'
     
     #- name: Execute unit tests
@@ -55,7 +54,6 @@ jobs:
         dotnet publish -c Release -r linux-x64 --self-contained
         
     - name: Pack release
-      if: startsWith(github.ref, 'refs/tags/')
       run: |
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
         zip -r Waifuclient-Win-x64.zip *
@@ -66,7 +64,6 @@ jobs:
       
     - name: Release
       uses: softprops/action-gh-release@v2 
-      if: startsWith(github.ref, 'refs/tags/') 
       with:
         body_path: ${{ github.workspace }}-CHANGELOG.MD
         files: |
