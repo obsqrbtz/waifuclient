@@ -64,12 +64,15 @@ jobs:
         cd linux-x64/publish
         zip -r ${{ github.workspace }}/Waifuclient-Linux-x64.zip *
         ls ${{ github.workspace }}
+
+    - name: Check workpace
+      if: startsWith(github.ref, 'refs/tags/')
+      run: ls ${{ github.workspace }}
       
     - name: Release
       uses: softprops/action-gh-release@v2 
       if: startsWith(github.ref, 'refs/tags/')  
       with:
-        path: ${{ github.workspace }}
         body_path: CHANGELOG.MD
         files: |
           Waifuclient-Win-x64.zip
