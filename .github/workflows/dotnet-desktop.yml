@@ -52,7 +52,6 @@ jobs:
       uses: gittools/actions/gitversion/execute@v1.1.1
       with:
         useConfigFile: true
-        updateProjectFiles: true
 
     - name: Push Git Tag
       run: | 
@@ -78,6 +77,7 @@ jobs:
         
     - name: Pack release
       run: |
+        dotnet-gitversion -config GitVersion.yml -updateprojectfiles
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
         zip -r ${{ github.workspace }}/WaifuClient-Win-x64.zip *
         cd ../../
