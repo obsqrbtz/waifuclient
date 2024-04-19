@@ -61,7 +61,6 @@ jobs:
         git push origin ${{ env.GitVersion_MajorMinorPatch }}
 
     - name: Update changelog
-      if: startsWith(github.ref, 'refs/tags/')
       run: |
           npm update
           npm exec -c 'git-cliff --current --output ${{ github.workspace }}/CHANGELOG.md'
@@ -76,7 +75,6 @@ jobs:
         dotnet publish -c Release -r linux-x64 --self-contained
         
     - name: Pack release
-      if: startsWith(github.ref, 'refs/tags/')
       run: |
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
         zip -r ${{ github.workspace }}/WaifuClient-Win-x64.zip *
