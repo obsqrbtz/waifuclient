@@ -89,5 +89,5 @@ jobs:
         tag: ${{ env.GitVersion_MajorMinorPatch }}
         name: ${{ env.GitVersion_FullSemVer }}
         artifacts: "*.zip"
-        bodyFile: "CHANGELOG.md"
+        bodyFile: "CHANGELOG.md" 
 
