@@ -73,7 +73,7 @@ jobs:
         dotnet publish -c Release -r win-x64 --self-contained
         dotnet publish -c Release -r linux-x64 --self-contained
         
-    - name: Pack release
+    - name: Pack release 
       run: |
         dotnet-gitversion -config GitVersion.yml -updateprojectfiles
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
