@@ -68,9 +68,13 @@ jobs:
     - name: Check workpace
       if: startsWith(github.ref, 'refs/tags/')
       run: ls ${{ github.workspace }}
-
-    - uses: ncipollo/release-action@v1
+      
+    - name: Release
+      uses: softprops/action-gh-release@v2 
+      if: startsWith(github.ref, 'refs/tags/')  
       with:
-        artifacts: "${{ github.workspace }}/*.zip"
-        bodyFile: "CHANGELOG.md"
+        body_path: CHANGELOG.MD
+        files: |
+          Waifuclient-Win-x64.zip
+          Waifuclient-Linux-x64.zip
 
