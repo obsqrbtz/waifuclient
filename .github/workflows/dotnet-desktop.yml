@@ -72,12 +72,8 @@ jobs:
           ls ${{ github.workspace }}/CHANGELOG.md
           cat ${{ github.workspace }}/CHANGELOG.md
       
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')  
+    - uses: ncipollo/release-action@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        body_path: ${{ github.workspace }}/CHANGELOG.MD
-        files: |
-          ${{ github.workspace }}/*.zip
+        artifacts: "*.zip"
+        bodyFile: "CHANGELOG.md"
 
