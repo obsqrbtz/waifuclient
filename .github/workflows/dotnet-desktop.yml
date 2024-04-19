@@ -70,10 +70,10 @@ jobs:
       run: ls ${{ github.workspace }}
       
     - name: Release
-      uses: softprops/action-gh-release@v2 
+      uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')  
       with:
-        body_path: ./CHANGELOG.MD
+        body_path: ${{ github.workspace }}/CHANGELOG.MD
         files: |
-          ./*.zip
+          ${{ github.workspace }}/*.zip
 
