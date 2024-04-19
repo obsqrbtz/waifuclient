@@ -45,7 +45,7 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       run: |
           npm update
-          npm exec -c 'git-cliff --current --output CHANGELOG.md'
+          npm exec -c 'git-cliff --current --output ${{ github.workspace }}/CHANGELOG.md'
     
     #- name: Execute unit tests
     #  run: dotnet test
@@ -60,17 +60,18 @@ jobs:
       run: |
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
         zip -r Waifuclient-Win-x64.zip *
+        cp WaifuClient-Win-x64.zip ${{ github.workspace }}/WaifuClient-Win-x64.zip
         cd ../../
         cd linux-x64/publish
         zip -r Waifuclient-Linux-x64.zip *
-        cd ../../../../../
+        cp Waifuclient-Linux-x64.zip ${{ github.workspace }}/Waifuclient-Linux-x64.zip
       
     - name: Release
       uses: softprops/action-gh-release@v2 
       if: startsWith(github.ref, 'refs/tags/')  
       with:
-        body_path: CHANGELOG.MD
+        body_path: ${{ github.workspace }}/CHANGELOG.MD
         files: |
-          Waifuclient/bin/Release/net6.0/win-x64/publish/Waifuclient-Win-x64.zip
-          Waifuclient/bin/Release/net6.0/linux-x64/publish/Waifuclient-Linux-x64.zip
+          ${{ github.workspace }}/Waifuclient-Win-x64.zip
+          ${{ github.workspace }}/Waifuclient-Linux-x64.zip
 
