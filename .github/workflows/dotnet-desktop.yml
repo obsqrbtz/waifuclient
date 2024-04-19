@@ -57,8 +57,8 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "github-actions@users.noreply.github.com"
-        git tag -a ${{ env.GitVersion_MajorMinorPatch }} -m ${{ env.GitVersion_MajorMinorPatch }}
-        git push origin ${{ env.GitVersion_MajorMinorPatch }} -m ${{ env.GitVersion_MajorMinorPatch }}
+        git tag ${{ env.GitVersion_MajorMinorPatch }} -m ${{ env.GitVersion_MajorMinorPatch }}
+        git push origin ${{ env.GitVersion_MajorMinorPatch }}
 
     - name: Update changelog
       if: startsWith(github.ref, 'refs/tags/')
