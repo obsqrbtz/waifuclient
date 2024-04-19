@@ -42,17 +42,9 @@ jobs:
         sudo apt update -y
         sudo apt install -y zip
 
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
-      with:
-        versionSpec: '5.x'
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v1.1.1
-
     - name: Update changelog
-      run: |
-          npm update
-          npm exec -c 'git-cliff --current --output CHANGELOG.md'
+      if: startsWith(github.ref, 'refs/tags/')
+      run: npm exec -c 'git-cliff --current --output CHANGELOG.md'
     
     #- name: Execute unit tests
     #  run: dotnet test
@@ -63,6 +55,7 @@ jobs:
         dotnet publish -c Release -r linux-x64 --self-contained
         
     - name: Pack release
+      if: startsWith(github.ref, 'refs/tags/')
       run: |
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
         zip -r Waifuclient-Win-x64.zip *
@@ -73,8 +66,8 @@ jobs:
       
     - name: Release
       uses: softprops/action-gh-release@v2 
+      if: startsWith(github.ref, 'refs/tags/') 
       with:
-        tag_name: ${{ env.MajorMinorPatch }}
         body_path: ${{ github.workspace }}-CHANGELOG.MD
         files: |
           Waifuclient/bin/Release/net6.0/win-x86/publish/ReForm-Win-x64.zip
