@@ -75,6 +75,6 @@ jobs:
       with:
         body_path: /home/runner/work/waifuclient/waifuclient/CHANGELOG.MD
         files: |
-          /home/runner/work/waifuclient/Waifuclient-Win-x64.zip
-          /home/runner/work/waifuclient/Waifuclient-Linux-x64.zip
+          /home/runner/work/waifuclient/waifuclient/WaifuClient-Win-x64.zip
+          /home/runner/work/waifuclient/waifuclient/WaifuClient-Linux-x64.zip
 
