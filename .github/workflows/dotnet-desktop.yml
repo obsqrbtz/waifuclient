@@ -86,6 +86,8 @@ jobs:
       
     - uses: ncipollo/release-action@v1
       with:
+        tag: ${{ env.GitVersion_MajorMinorPatch }}
+        name: ${{ env.GitVersion_FullSemVer }}
         artifacts: "*.zip"
         bodyFile: "CHANGELOG.md"
 
