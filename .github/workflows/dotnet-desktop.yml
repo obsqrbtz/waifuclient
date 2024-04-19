@@ -73,8 +73,8 @@ jobs:
       uses: softprops/action-gh-release@v2 
       if: startsWith(github.ref, 'refs/tags/')  
       with:
-        body_path: CHANGELOG.MD
+        body_path: /home/runner/work/waifuclient/waifuclient/CHANGELOG.MD
         files: |
-          Waifuclient-Win-x64.zip
-          Waifuclient-Linux-x64.zip
+          /home/runner/work/waifuclient/waifuclient/Waifuclient-Win-x64.zip
+          /home/runner/work/waifuclient/waifuclient/Waifuclient-Linux-x64.zip
 
