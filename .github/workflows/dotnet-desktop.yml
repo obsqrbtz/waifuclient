@@ -42,6 +42,13 @@ jobs:
         sudo apt update -y
         sudo apt install -y zip
 
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v1.1.1
+
     - name: Update changelog
       run: |
           npm update
@@ -67,6 +74,7 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2 
       with:
+        tag_name: ${{ env.MajorMinorPatch }}
         body_path: ${{ github.workspace }}-CHANGELOG.MD
         files: |
           Waifuclient/bin/Release/net6.0/win-x86/publish/ReForm-Win-x64.zip
