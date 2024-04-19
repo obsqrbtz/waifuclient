@@ -52,12 +52,15 @@ jobs:
       uses: gittools/actions/gitversion/execute@v1.1.1
       with:
         useConfigFile: true
+        updateProjectFiles: true
 
     - name: Push Git Tag
       run: |
         git config user.name "GitHub Actions"
         git config user.email "github-actions@users.noreply.github.com"
         git tag ${{ env.GitVersion_MajorMinorPatch }} -m ${{ env.GitVersion_MajorMinorPatch }}
+        git add *
+        git commit -m "v${{ env.GitVersion_MajorMinorPatch }}"
         git push origin ${{ env.GitVersion_MajorMinorPatch }}
 
     - name: Update changelog
@@ -70,7 +73,6 @@ jobs:
 
     - name: Build
       run: |
-        dotnet-gitversion /updateprojectfiles 
         dotnet publish -c Release -r win-x64 --self-contained
         dotnet publish -c Release -r linux-x64 --self-contained
         
