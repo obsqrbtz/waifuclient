@@ -67,7 +67,10 @@ jobs:
 
     - name: Check workpace
       if: startsWith(github.ref, 'refs/tags/')
-      run: ls ${{ github.workspace }}
+      run: |
+          ls ${{ github.workspace }}
+          ls ${{ github.workspace }}/CHANGELOG.md
+          cat ${{ github.workspace }}/CHANGELOG.md
       
     - name: Release
       uses: softprops/action-gh-release@v1
