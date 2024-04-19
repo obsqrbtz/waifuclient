@@ -71,5 +71,5 @@ jobs:
         body_path: ${{ github.workspace }}-CHANGELOG.MD
         files: |
           Waifuclient/bin/Release/net6.0/win-x86/publish/ReForm-Win-x64.zip
-          Waifuclient/bin/Release/net6.0/win-x86/publish/ReForm-Linux-x64.zip
+          Waifuclient/bin/Release/net6.0/linux-x64/publish/ReForm-Linux-x64.zip
 
