@@ -42,12 +42,6 @@ jobs:
         sudo apt update -y
         sudo apt install -y zip
 
-    - name: Update changelog
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-          npm update
-          npm exec -c 'git-cliff --current --output ${{ github.workspace }}/CHANGELOG.md'
-
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v1.1.1
       with:
@@ -55,9 +49,17 @@ jobs:
 
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v1.1.1
+      with:
+        useConfigFile: true
     
     - name: Create tag
-      run: git tag -a ${{ env.MajorMinorPatch }} -m ${{ env.MajorMinorPatch }}
+      run: git tag -a ${{ env.GitVersion_MajorMinorPatch }} -m ${{ env.GitVersion_MajorMinorPatch }}
+
+    - name: Update changelog
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+          npm update
+          npm exec -c 'git-cliff --current --output ${{ github.workspace }}/CHANGELOG.md'
 
     #- name: Execute unit tests
     #  run: dotnet test
