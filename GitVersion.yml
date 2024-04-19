@@ -1,0 +1,12 @@
+mode: ContinuousDeployment
+assembly-versioning-scheme: MajorMinorPatchTag
+major-version-bump-message: "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?(!:|:.*\\n\\n((.+\\n)+\\n)?BREAKING CHANGE:\\s.+)"
+minor-version-bump-message: "^(feat)(\\([\\w\\s-]*\\))?:"
+patch-version-bump-message: "^(build|chore|ci|docs|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?:"
+commit-message-incrementing: Enabled
+increment: Inherit
+branches:
+  master:
+    regex: ^master$|^main$ 
+    tag: alpha
+    is-release-branch: true
