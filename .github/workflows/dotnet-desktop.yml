@@ -57,7 +57,7 @@ jobs:
 
     - name: Build
       run: |
-        dotnet-gitversion /updateprojectfiles
+        dotnet-gitversion /updateprojectfiles 
         dotnet publish -c Release -r win-x64 --self-contained
         dotnet publish -c Release -r linux-x64 --self-contained
         
