@@ -59,12 +59,10 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       run: |
         cd Waifuclient/bin/Release/net8.0/win-x64/publish
-        zip -r Waifuclient-Win-x64.zip *
-        cp WaifuClient-Win-x64.zip ${{ github.workspace }}/WaifuClient-Win-x64.zip
+        zip -r ${{ github.workspace }}/WaifuClient-Win-x64.zip *
         cd ../../
         cd linux-x64/publish
-        zip -r Waifuclient-Linux-x64.zip *
-        cp Waifuclient-Linux-x64.zip ${{ github.workspace }}/Waifuclient-Linux-x64.zip
+        zip -r ${{ github.workspace }}/Waifuclient-Linux-x64.zip *
       
     - name: Release
       uses: softprops/action-gh-release@v2 
