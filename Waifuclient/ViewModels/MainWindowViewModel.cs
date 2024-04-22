@@ -12,7 +12,7 @@ namespace Waifuclient.ViewModels
         private WaifuDb _db;
         private ApiWrapper _apiWrapper;
         private bool _disposed = false;
-        private string _dbPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\waifu.db";
+        private string _dbPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/waifu.db";
 
         public MainWindowViewModel()
         {
