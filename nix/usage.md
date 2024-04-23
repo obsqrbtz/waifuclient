@@ -1,3 +1,0 @@
-```
-nix develop --command fish
-```
